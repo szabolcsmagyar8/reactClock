@@ -3,7 +3,6 @@ import Clock from "react-clock";
 import Moment from "moment-timezone";
 import styled from "styled-components";
 import styles from './App.css';
-import cmpDates from '../src/assets/cmpDates.json';
 
 import DigitalClock from "./digital-clock";
 
@@ -119,7 +118,7 @@ class App extends Component {
     document.getElementById('circle_s').style.strokeDashoffset = initialOffset - ((60 - secs) * (initialOffset / 60));
   }
 
-  clockInterval = (cmpTime, cmpText) => {
+  clockInterval = (cmpTime, cmpText, dates) => {
     var self = this;
 
     var interval = setInterval(function () {
@@ -141,8 +140,8 @@ class App extends Component {
       if (days == 0 && hours == 0 && minutes == 0 && seconds == 0) {
         clearInterval(interval);  // clearing current interval
 
-        var newDateOfNextCMP = self.getClosestDate(self.parseJson(cmpDates));  // gets next closest CMP date
-        self.clockInterval(newDateOfNextCMP.date, newDateOfNextCMP.text);  // restarts clocks with the next CMP date
+        var dateOfNextCMP = self.getClosestDate(dates); // get next CMP date
+        self.clockInterval(dateOfNextCMP.date, dateOfNextCMP.text, dates);  // restarts clocks with the next CMP date
       }
     }, 1000);
   }
@@ -164,7 +163,7 @@ class App extends Component {
     var dateOfNextCMP = this.getClosestDate(dates);
 
     document.getElementById('nextCMPText').innerHTML = dateOfNextCMP.text;
-    this.clockInterval(dateOfNextCMP.date, dateOfNextCMP.text);
+    this.clockInterval(dateOfNextCMP.date, dateOfNextCMP.text, dates);
   }
 
   createCMPs = () => {
