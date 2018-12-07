@@ -39,7 +39,7 @@ const ClockFrame = ({ date, city, type, onClick }) => (
     {type === "analog" && (
       <Clock size="200" renderNumbers={true} value={date.toDate()} />
     )}
-    {type === "digital" && <DigitalClock size={20} time={date.format("HH:mm:ss")} />}
+    {type === "digital" && <DigitalClock size={55} time={date.format("HH:mm:ss")} />}
     <Controls justifyContent="space-around" alignItems={"center"}>
       <Group>
         {type === "analog" ? (
@@ -75,35 +75,30 @@ class App extends Component {
   state = {
     clocks: [
       {
-        city: "Europe/Walldorf",
-        offset: 1,
+        city: "Europe/UTC",
+        offset: -1,
         type: "digital",
-        date: Moment().add(1, "hours")
+        date: Moment().add(-1, "hours")
       },
       {
-        city: "Asia/Dubai",
-        offset: 2,
+        city: "Europe/CET",
+        offset: 0,
         type: "digital",
-        date: Moment().add(2, "hours")
+        date: Moment().add(0, "hours")
       },
       {
-        city: "America/Ashburn",
-        offset: -6,
+        city: "Asia/IST",
+        offset: +4.50,
         type: "digital",
-        date: Moment().add(-6, "hours")
+        date: Moment().add(+4.50, "hours")
       },
-      {
-        city: "America/Chandler",
-        offset: -8,
-        type: "digital",
-        date: Moment().add(-8, "hours")
-      }
+
     ]
   };
 
   // sets the clock stroke offset and the time text 
   updateClocksOnUI = (days, hours, mins, secs) => {
-    var initialOffset = 408.40704496667312100014363982634;  // 2 * circle radius * pi = circumference
+    var initialOffset = 565.48667764616278292327580899031;  // 2 * circle radius * pi = circumference
 
     // sets the day/hour/min/sec texts in the clocks on UI
     document.getElementById('daycounter').innerHTML = Math.floor(days);
@@ -177,17 +172,17 @@ class App extends Component {
       var text = "Remaining time until ";
       switch (i % 3) {
         case 0:
-          text += "APJ CMP: ";
+          text += "APJ CMP ";
           date.setDate(referenceDay.getDate() + weekNum * 7);
           date.setHours(15, 0, 0, 0);
           break;
         case 1:
-          text += "EMEA CMP: ";
+          text += "EMEA CMP ";
           date.setDate(referenceDay.getDate() + weekNum * 7);
           date.setHours(22, 0, 0, 0);
           break;
         case 2:
-          text += "AMER CMP: ";
+          text += "AMER CMP ";
           date.setDate(referenceDay.getDate() + weekNum * 7 + 1);
           date.setHours(4, 0, 0, 0);
           weekNum++;
@@ -226,14 +221,14 @@ class App extends Component {
           alignItems={"left"}
           style={{ backgroundColor: "white", filter: "invert(100%)" }}
         >
-          <span style={{ fontSize: "2em", margin: "10px" }}>
+          <span style={{ fontSize: "2.5em", margin: "10px" }}>
             Datacenter Time
           </span>
         </Flex>
         <Flex
           justifyContent="center"
           alignItems="center"
-          style={{ width: "100%", height: "80%" }}>
+          style={{ width: "100%", height: "70%", fontSize: "2em" }}>
           {this.state.clocks.map((clock, id) => (
             <ClockFrame
               key={id}
@@ -247,52 +242,50 @@ class App extends Component {
             />
           ))}
         </Flex>
-        <Flex justifyContent="center" alignItems="center" style={{ width: "100%", height: "0%" }}>
+        <Flex justifyContent="center" alignItems="center" style={{ width: "100%", height: "3%" }}>
           <div id="nextCMPText" className="nextCMPText" />
         </Flex>
         <Flex
-          justifyContent="center" alignItems="center" style={{ width: "100%", height: "0%" }}>
+          justifyContent="center" alignItems="center" style={{ width: "100%", height: "1%" }}>
           <div class="item html">
             <h1 id="daycounter"></h1>
             <h4 style={{ marginTop: "50px" }}>days</h4>
-            <svg width="150" height="150" xmlns="http://www.w3.org/2000/svg">
+            <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
               <g>
-                <circle id="circle_d" class="circle_animation_d" r="65" cy="75" cx="75" fill="#ffffff40" stroke-width="4" stroke="#70ff57" />
+                <circle id="circle_d" class="circle_animation_d" r="85" cy="100" cx="100" stroke="#70ff57" />
               </g>
             </svg>
           </div>
           <div class="item html">
             <h1 id="hourcounter"></h1>
             <h4 style={{ marginTop: "50px" }}>hours</h4>
-            <svg width="150" height="150" xmlns="http://www.w3.org/2000/svg">
+            <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
               <g>
-                <circle id="circle_h" class="circle_animation_h" r="65" cy="75" cx="75" fill="#ffffff40" stroke-width="4" stroke="#f7ff4b" />
+                <circle id="circle_h" class="circle_animation_h" r="85" cy="100" cx="100" stroke="#f7ff4b" />
               </g>
             </svg>
           </div>
           <div class="item html">
             <h1 id="minutecounter"></h1>
             <h4 style={{ marginTop: "50px" }}>minutes</h4>
-            <svg width="150" height="150" xmlns="http://www.w3.org/2000/svg">
+            <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
               <g>
-                <circle id="circle_m" class="circle_animation_m" r="65" cy="75" cx="75" fill="#ffffff40" stroke-width="4" stroke="#19b2ff" />
+                <circle id="circle_m" class="circle_animation_m" r="85" cy="100" cx="100" stroke="#19b2ff" />
               </g>
             </svg>
           </div>
           <div class="item html">
             <h1 id="secondcounter"></h1>
             <h4 style={{ marginTop: "50px" }}>seconds</h4>
-            <svg width="150" height="150" xmlns="http://www.w3.org/2000/svg">
+            <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
               <g>
-                <circle id="circle_s" class="circle_animation_s" r="65" cy="75" cx="75" fill="#ffffff40" stroke-width="4" stroke="#fe8e00" />
+                <circle id="circle_s" class="circle_animation_s" r="85" cy="100" cx="100" stroke="#fe8e00" />
               </g>
             </svg>
           </div>
         </Flex>
       </div>
-
     );
   }
 }
-
 export default App;
